@@ -37,9 +37,12 @@ Your Pages site will use the layout and styles from the Jekyll theme you have se
 Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
 
 
+
 ---
+
 ## code base
 
+*   higlight text
 ```java
 package com.char6ming.datatoolkit;
 
@@ -213,4 +216,45 @@ public class TextHighlighter {
         System.out.println(tr);
     }
 }
+```
+
+*   etcd、k8s https usage
+
+```java
+
+    final Map<String, String> apiUrls = new TreeMap<String, String>(){{
+        put("etcd",      "https://xx.xx.xxx.xxx:8123");
+        put("apiserver", "https://" + System.getenv("SERVERAPI"));
+    }};
+
+    final  Map <String, Map<String, String>> caFiles = new TreeMap<String, Map<String, String>>(){{
+        put ("etcd",  new TreeMap<String, String>(){{
+            put("ca",   "/etc/etcd/ssl/ca.pem");
+            put("cert", "/etc/etcd/ssl/etcd.pem");
+            put("key",  "/etc/etcd/ssl/etcd-key.pem");
+        }});
+
+        put ("apiserver", new TreeMap<String, String>(){{
+            put("ca",   "/etc/kubernetes/ssl/ca.pem");
+            put("cert", "/etc/kubernetes/ssl/admin.pem");
+            put("key",  "/etc/kubernetes/ssl/admin-key.pem");
+        }});
+    }};
+    
+    
+     SslContext sslContext = SslContextBuilder.forClient()
+            .trustManager(new File(caFiles.get("etcd").get("ca")))
+            .keyManager(new File(caFiles.get("etcd").get("cert")), new File(caFiles.get("etcd").get("key")))
+            .build();
+    EtcdClient etcdClient = new EtcdClient(sslContext, URI.create(apiUrls.get("etcd")));
+    
+    
+    Config config = new ConfigBuilder().withMasterUrl(apiUrls.get("apiserver"))
+            .withTrustCerts(true)
+            .withCaCertFile(caFiles.get("apiserver").get("ca"))
+            .withClientCertFile(caFiles.get("apiserver").get("cert"))
+            .withClientKeyFile(caFiles.get("apiserver").get("key"))
+            .build();
+    client = new DefaultKubernetesClient(config);
+
 ```
