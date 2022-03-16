@@ -42,7 +42,7 @@ Having trouble with Pages? Check out our [documentation](https://help.github.com
 
 ## code base
 
-*   higlight text
+### higlight text
 
 ```java
 package com.char6ming.datatoolkit;
@@ -219,7 +219,7 @@ public class TextHighlighter {
 }
 ```
 
-*   etcd、k8s https usage
+###  etcd、k8s https usage
 
 ```java
 
