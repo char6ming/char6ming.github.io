@@ -221,3 +221,150 @@ public class TextHighlighter {
     client = new DefaultKubernetesClient(config);
 
 ```
+
+
+
+### cut down the java code complexity
+
+> think in use java stream 
+
+#### optinal 
+
+* raw code:
+
+```java
+    AggregationBuilder aggregationBuilder = deserializeObject(aggBean.getValue(), NAMED_CLASS.get(aggBean.getKey()), jp);
+    if (aggregationBuilder != null) {
+
+        if (subAggs != null) {
+            List<Object> subObjectAggs = deserializeAgg(subAggs.getValue(), jp);
+            if (subObjectAggs != null) {
+                for (Object subAgg : subObjectAggs) {
+                    aggregationBuilder.subAggregation((AggregationBuilder) subAgg);
+                }
+            }
+        }
+
+        aggregationBuilder.name = aliasName;
+        list.add(aggregationBuilder);
+    }
+```
+
+* optimize 1: ugly
+
+```java
+    AggregationBuilder aggregationBuilder = deserializeObject(aggBean.getValue(), NAMED_CLASS.get(aggBean.getKey()), jp);
+    if (null == aggregationBuilder) {
+
+        continue;
+    }
+
+    List<Object> subObjectAggs;
+    if (subAggs != null && (subObjectAggs = deserializeAgg(subAggs.getValue(), jp)) != null) {
+        subObjectAggs.stream().map(AggregationBuilder.class::cast).forEach(aggregationBuilder::subAggregation);
+    }
+
+    aggregationBuilder.name = aliasName;
+    list.add(aggregationBuilder);
+```
+
+optimize 2:
+
+```java
+    AggregationBuilder aggregationBuilder = deserializeObject(aggBean.getValue(), NAMED_CLASS.get(aggBean.getKey()), jp);
+    if (null == aggregationBuilder) {
+
+        continue;
+    }
+
+    Optional.ofNullable(subAggs).map(e -> {
+        try {
+            return deserializeAgg(e.getValue(), jp);
+        } catch (JsonProcessingException ignored) {
+            throw new WcsException(String.format("parse json recursion exception [%s]: [%s] and [%s]", aliasName, e.getKey(), e.getValue()));
+        }
+    }).ifPresent(e -> e.stream().map(AggregationBuilder.class::cast).forEach(aggregationBuilder::subAggregation));
+
+    aggregationBuilder.name = aliasName;
+    list.add(aggregationBuilder);
+```
+
+#### Predicate
+
+* raw code
+
+```java
+    switch (nestedField.type()) {
+        case UNSIGNED_LONG:
+        case FLOAT:
+        case DOUBLE:
+            NumberFieldMapper numberField = (NumberFieldMapper) nestedField;
+            if (numberField.getNullValueBool() && NullTokenConf.getNullToken().equals(e)){
+                outPutMap.put(key, e);
+                return;
+            }
+            break;
+        case TEXT:
+            TextFieldMapper textField = (TextFieldMapper) nestedField;
+            if (textField.getNullValueBool() && NullTokenConf.getNullToken().equals(e)){
+                outPutMap.put(key, e);
+                return;
+            }
+            break;
+        case KEYWORD:
+            KeywordFieldMapper keywordField = (KeywordFieldMapper) nestedField;
+            if (keywordField.getNullValueBool() && NullTokenConf.getNullToken().equals(e)){
+                outPutMap.put(key, e);
+                return;
+            }
+            break;
+        default:
+            break;
+    }
+```
+
+* define method use Predicate arguments
+
+```java
+    private boolean nullValueFieldPocess(Map<String, Object> outPutMap, String key, Object fieldValue, FieldMapper nestedField) {
+        switch (nestedField.type()) {
+            case LONG:
+            case UNSIGNED_LONG:
+            case FLOAT:
+            case DOUBLE:
+                if (isNullValue(outPutMap, key, fieldValue, NumberFieldMapper::getNullValueBool, (NumberFieldMapper)nestedField)) {
+                    return true;
+                }
+
+                break;
+            case TEXT:
+                if (isNullValue(outPutMap, key, fieldValue, TextFieldMapper::getNullValueBool, (TextFieldMapper)nestedField)) {
+                    return true;
+                }
+
+                break;
+            case KEYWORD:
+                if (isNullValue(outPutMap, key, fieldValue, KeywordFieldMapper::getNullValueBool, (KeywordFieldMapper)nestedField)) {
+                    return true;
+                }
+
+                break;
+            default:
+
+                break;
+        }
+
+        return false;
+    }
+
+    private <T> boolean isNullValue(Map<String, Object> outPutMap, String key, Object fieldValue, Predicate<T> p, T nestedField) {
+        if (!(p.test(nestedField) && NullTokenConf.getNullToken().equals(fieldValue))) {
+
+            return false;
+        }
+
+        outPutMap.put(key, fieldValue);
+
+        return true;
+    }
+```
