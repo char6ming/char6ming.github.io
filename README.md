@@ -7,6 +7,7 @@ Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://j
 ### my post
 * [code base](code-base.md)
 * [pcre2 build](pcre2.md)
+* [**SOLVED**: No wifi after sleep-suspend Ubuntu](ser5_pro_5600h_wifi_issue.md)
 
 
 ### Markdown
