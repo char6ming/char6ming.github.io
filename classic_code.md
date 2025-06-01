@@ -123,7 +123,7 @@ int binary_search(int arr[], int len, int target) {
 }
 ```
 
-33. 搜索旋转排序数组
+## 33. 搜索旋转排序数组
 ```java
 class Solution {
     public int search(int[] nums, int target) {
