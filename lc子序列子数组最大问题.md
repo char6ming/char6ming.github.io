@@ -199,3 +199,30 @@ class Solution {
     }
 }
 ```
+
+---
+## 560. 和为 K 的子数组
+```java
+class Solution {
+    public int subarraySum(int[] nums, int k) {
+        // prefixSum 存储前缀和为 sum 的次数， 设 k = sum - x 成立，
+        // 则 sum - k 在前缀和 map 存在，存在则累加次数
+        Map<Integer, Integer> prefixSum = new HashMap<>();
+        prefixSum.put(0, 1);
+        int res = 0;
+        int sum = 0;
+
+        for (int n: nums) {
+            sum += n;
+
+            if (prefixSum.containsKey(sum - k)) {
+                res += prefixSum.get(sum - k);
+            } 
+ 
+            prefixSum.put(sum, prefixSum.getOrDefault(sum, 0) + 1);
+        }
+
+        return res;
+    }
+}
+```
