@@ -123,6 +123,34 @@ int binary_search(int arr[], int len, int target) {
 }
 ```
 
+## 153. 寻找旋转排序数组中的最小值
+```java
+class Solution {
+    public int findMin(int[] nums) {
+        int l = 0;
+        int r = nums.length - 1;
+
+        // 如果数组没有旋转或者只有一个元素
+        if (nums[l] <= nums[r]) {
+            return nums[l];
+        }
+        // 旋转后的数组由两个有序部分组成，且最小值是第
+        // 二个有序部分的第一个元素。
+        while (l < r) {
+            int m = (l + r) / 2;
+
+            if (nums[m] > nums[r]) {
+                l = m + 1;
+            } else {
+                r = m;
+            }
+        }
+
+        return nums[l];
+    }
+}
+```
+
 ## 33. 搜索旋转排序数组
 ```java
 class Solution {
