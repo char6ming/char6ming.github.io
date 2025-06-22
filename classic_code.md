@@ -151,7 +151,7 @@ class Solution {
 }
 ```
 
-## 153. 寻找旋转排序数组中的最小值
+## 153. 寻找旋转排序数组中的最小值（不含重复元素）
 ```java
 class Solution {
     public int findMin(int[] nums) {
@@ -174,6 +174,31 @@ class Solution {
             }
         }
 
+        return nums[l];
+    }
+}
+```
+## 154. 寻找旋转排序数组中的最小值 II（含重复元素）
+```java
+class Solution {
+    public int findMin(int[] nums) {
+        int l = 0, r = nums.length - 1;
+        
+        while (l < r) {
+            int m = l + (r - l) / 2;
+            
+            if (nums[m] > nums[r]) {
+                // 最小值在右半部分
+                l = m + 1;
+            } else if (nums[m] < nums[r]) {
+                // 最小值在左半部分（包括m）
+                r = m;
+            } else {
+                // 无法确定，保守缩小右边界
+                r--;
+            }
+        }
+        
         return nums[l];
     }
 }
