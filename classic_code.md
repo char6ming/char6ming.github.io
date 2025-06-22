@@ -123,6 +123,34 @@ int binary_search(int arr[], int len, int target) {
 }
 ```
 
+## 74. 搜索二维矩阵
+```java
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int l = 0;
+        int r = m * n - 1;
+
+        while (l <= r) {
+            int midIdx   = l + (r - l) / 2;
+            // 注意中间值下标定位：行为除 n,列为模 n
+            int midValue = matrix[midIdx / n][midIdx % n];
+
+            if (target == midValue) {
+                return true;
+            } else if (target > midValue) {
+                l = midIdx + 1;
+            } else {
+                r = midIdx - 1;
+            }
+        }
+
+        return false;
+    }
+}
+```
+
 ## 153. 寻找旋转排序数组中的最小值
 ```java
 class Solution {
