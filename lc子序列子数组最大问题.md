@@ -136,6 +136,38 @@ class Solution {
 }
 ```
 
+## 5. 最长回文子串
+```java
+class Solution {
+    public String longestPalindrome(String s) {
+        int len = s.length();
+        boolean[][] dp = new boolean[len][len];
+        int res   = 0;
+        int left  = 0;
+        int right = 0;
+
+        // 左向前跑、右向后跑 
+        for (int l = len - 1; l >= 0; --l) {
+            for (int r = l; r < len; ++r) {
+                // 递推公式：获取左右两边同时向中心缩小1，对应dp的值
+                if ((s.charAt(l) == s.charAt(r)) && (r - l < 3 || dp[l + 1][r - 1])) {
+                    dp[l][r] = true;
+
+                    if (r - l > res) {
+                        left  = l;
+                        right = r;
+
+                        res = right - left;
+                    }
+                }
+            }
+        }
+
+        return s.substring(left, right + 1);
+    }
+}
+```
+
 ## 72. 编辑距离
 ```java
 class Solution {
