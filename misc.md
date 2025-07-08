@@ -8,3 +8,5 @@
         - Type y to confirm that you want to save the changes.
     
    * download [gdisk](https://sourceforge.net/projects/gptfdisk/files/gptfdisk/)
+
+* [HOW-TO Triple Boot Mountain Lion, Windows 7, LMDE](https://forums.linuxmint.com/viewtopic.php?t=132603)
