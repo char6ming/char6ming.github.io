@@ -1,3 +1,4 @@
+#### triple boot on macbook air 2012 (A1466)
 
 * [Suspicious MBR at sector 0, is there a way to fix it?](https://superuser.com/questions/1140907/suspicious-mbr-at-sector-0-is-there-a-way-to-fix-it)
    * [cite](https://superuser.com/a/1142088/673168): That's a hybrid MBR. It's necessary to boot Windows in BIOS mode, but if you plan to install Windows 8 or 10 in EFI mode, you need to replace the hybrid MBR with a legal protective MBR. You can do this with my GPT fdisk (gdisk) program:
