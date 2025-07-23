@@ -15,3 +15,5 @@
 * [touchpad dirver patch](https://www.douban.com/note/868175161/?_i=2043220h3i97ks)、[mac-precision-touchpad](https://github.com/imbushuo/mac-precision-touchpad/releases)
   * 1、 windows powershell (admin mode： ctrl + shift + enter)
   * 2、 ```pnputil /add-driver C:\Drivers\AmtPtpDevice.inf  /install```
+
+* use [key](https://learn.microsoft.com/zh-cn/windows-server/get-started/kms-client-activation-keys?tabs=windows1110ltsc%2Cwindows81%2Cserver2025%2Cversion1803), run powershell as admin: 'slmgr /ikp M7XTQ-...'
