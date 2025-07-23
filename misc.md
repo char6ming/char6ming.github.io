@@ -21,4 +21,4 @@
   * [Where to Download Safari](https://www.iclarified.com/89103/where-to-download-safari) 、 [6.2.8](https://filehippo.com/mac/download_safari_for_mac/6.2.8/)
   * [Best Browser for OS X Mountain Lion in 2016?](https://forums.macrumors.com/threads/best-browser-for-os-x-mountain-lion-in-2016.1985353/)
   * [Firefox 68.12 ESR version for Mountain Lion](https://forums.macrumors.com/threads/firefox-quantum-ported-to-10-7-10-8.2191887/post-28827495)
-  * [firefox dynasty](https://github.com/i3roly/firefox-dynasty/releases) and [talk about](https://forums.macrumors.com/threads/firefox-dynasty-firefox-for-os-x-10-8-also-web-app-templates.2446475/)
+  * [firefox dynasty](https://github.com/i3roly/firefox-dynasty/releases) and [talk about](https://forums.macrumors.com/threads/firefox-dynasty-firefox-for-os-x-10-8-also-web-app-templates.2446475/)【推荐，亲测最新、功能最全】
