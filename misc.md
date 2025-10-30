@@ -16,7 +16,7 @@
   * 1、 windows powershell (admin mode： ctrl + shift + enter)
   * 2、 ```pnputil /add-driver C:\Drivers\AmtPtpDevice.inf  /install```
 
-* use [key](https://learn.microsoft.com/zh-cn/windows-server/get-started/kms-client-activation-keys?tabs=windows1110ltsc%2Cwindows81%2Cserver2025%2Cversion1803), run powershell as admin: 'slmgr /ikp M7XTQ-...'
+* use [key](https://learn.microsoft.com/zh-cn/windows-server/get-started/kms-client-activation-keys?tabs=windows1110ltsc%2Cwindows81%2Cserver2025%2Cversion1803), run powershell as admin: 'slmgr /ikp M7XTQ-...'、ref[ACTIVE](https://zhuanlan.zhihu.com/p/498458662)
 * browser
   * [Where to Download Safari](https://www.iclarified.com/89103/where-to-download-safari) 、 [6.2.8](https://filehippo.com/mac/download_safari_for_mac/6.2.8/)
   * [Best Browser for OS X Mountain Lion in 2016?](https://forums.macrumors.com/threads/best-browser-for-os-x-mountain-lion-in-2016.1985353/)
